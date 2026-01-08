@@ -1,0 +1,6 @@
+Bash
+dotnet cli code
+------------to add git ignore file
+dotnet new gitignore
+dotnet new gitattributes---->for slnx proj
+
