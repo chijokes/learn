@@ -99,3 +99,27 @@ dotnet aspnet-codegenerator controller \
     -dc ecommerce.Infrastructure.Data.AppDbContext \
     -outDir Controllers
 
+########################################################
+
+Database
+cd src/ecommerce.Infrastructure
+-------------
+
+# For SQL Server
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+# For SQLite (Easiest for learning/quick dev)
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+
+1. Install the Package in the API Project
+Even though your AppDbContext is in the Infrastructure layer, your API project is the one doing the "Wiring" in Program.cs. It needs the EF Core library to understand the AddDbContext command.
+Run this in your terminal:
+bash
+cd src/ecommerce.Api
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+Use code with caution.
+
+################################################
+web api ui swagger and scalar
+dotnet add package Scalar.AspNetCore
+dotnet add package Swashbuckle.AspNetCore.SwaggerUi
+
