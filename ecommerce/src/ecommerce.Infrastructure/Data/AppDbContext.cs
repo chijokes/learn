@@ -1,6 +1,9 @@
 
 using Microsoft.EntityFrameworkCore;
 using ecommerce.Domain.Entities; // Important: Reference your Domain Layer
+using System.Reflection;
+using System.Reflection.Emit;
+
 
 namespace ecommerce.Infrastructure.Data;
 
