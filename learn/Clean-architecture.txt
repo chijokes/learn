@@ -1,0 +1,61 @@
+
+Domain Layer: Pure C# classes (Entities) with no logic.
+Application Layer: Your "Verbs" (Logic). Interfaces for services.
+Infrastructure: Database context, Redis, and External APIs.
+API Layer: Controllers or Minimal APIs that handle the HTTP traffic.
+
+
+################################################################
+1. Create the Parent Folder and Solution
+bash
+# Create and enter the main project folder
+mkdir MyEcomProject
+cd MyEcomProject
+
+# Create the solution file in the root
+dotnet new slnx -n MyEcom
+Use code with caution.
+
+2. Create the src Folder and Projects
+We will create the projects directly inside the src sub-directory.
+bash
+# Create the src folder
+mkdir src
+
+# Create the 4 projects inside src
+dotnet new classlib -n MyEcom.Domain -o src/MyEcom.Domain
+dotnet new classlib -n MyEcom.Application -o src/MyEcom.Application
+dotnet new classlib -n MyEcom.Infrastructure -o src/MyEcom.Infrastructure
+dotnet new webapi -n MyEcom.Api -o src/MyEcom.Api
+Use code with caution.
+
+3. Link the Projects (References)
+Now, tell the projects how to talk to each other according to Clean Architecture rules:
+bash
+# Application only knows about Domain
+dotnet add src/MyEcom.Application/MyEcom.Application.csproj reference src/MyEcom.Domain/MyEcom.Domain.csproj
+
+# Infrastructure knows about Application (and thus Domain)
+dotnet add src/MyEcom.Infrastructure/MyEcom.Infrastructure.csproj reference src/MyEcom.Application/MyEcom.Application.csproj
+
+# API knows about Infrastructure (to wire up DI)
+dotnet add src/MyEcom.Api/MyEcom.Api.csproj reference src/MyEcom.Infrastructure/MyEcom.Infrastructure.csproj
+Use code with caution.
+
+4. Add Projects to the Solution
+Finally, register the projects in your .slnx file so they show up in Visual Studio or VS Code:
+bash
+dotnet sln add src/MyEcom.Domain/MyEcom.Domain.csproj
+dotnet sln add src/MyEcom.Application/MyEcom.Application.csproj
+dotnet sln add src/MyEcom.Infrastructure/MyEcom.Infrastructure.csproj
+dotnet sln add src/MyEcom.Api/MyEcom.Api.csproj
+Use code with caution.
+
+Why this is the "Master" Setup for 2026:
+The src Pattern: It follows the Standard .NET Project Layout. Later, you will create a tests folder at the same level as src to keep your unit tests organized.
+Clean Dependency Flow: Notice that Domain has zero references. It is the core "heart." API is the outer "shell."
+Ready for DevOps: Most CI/CD pipelines (like GitHub Actions) are pre-configured to look for source code inside a src folder.
+Next Step: Open this folder in VS Code. You should see a clean root with your .slnx file and a src folder containing your 4 distinct project layers. Microsoft's Guide on Organizing Projects explains more about managing these solution structures.
+
+
+

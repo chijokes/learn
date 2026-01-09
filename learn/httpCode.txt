@@ -1,0 +1,6 @@
+
+
+
+404 not found yoou didnt hit the SwaggerEndpoint
+401 not authorize
+200 success

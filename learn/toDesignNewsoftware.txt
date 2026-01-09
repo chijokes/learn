@@ -1,0 +1,48 @@
+
+
+To design a new software system like a master in 2026, you must stop thinking about "code" and start thinking about Data Flow and Business Rules. This process is called System Modeling.
+Here is the professional 5-step framework to plan a new software with unknown entities:
+1. The Discovery Phase: "Nouns and Verbs"
+Take a pen and paper. Describe the business process in plain English.
+Identify Nouns (Your Entities): These are the things the system tracks.
+Example: Product, Customer, Order, Discount, ShippingManifest.
+Identify Verbs (Your Logic): These are the actions the system performs.
+Example: PlaceOrder, UpdateStock, ApplyDiscount, TrackShipment.
+2. Define Entity Relationships (ERD)
+Once you have your nouns, decide how they talk to each other. In .NET, this determines how you configure Entity Framework Core.
+One-to-One: A Customer has one Wallet.
+One-to-Many: A Product has many Reviews.
+Many-to-Many: A Product can be in many Categories, and a Category has many Products.
+3. Draft the "Contract" (API Blueprint)
+Before writing any logic, design the Request and Response. This is the most critical "Master" step.
+Ask yourself: If I am the Mobile App, what data do I need to send to the server to create an Order?
+Example for a new "Order" entity:
+Request (Input): UserID, List of ProductIDs, ShippingAddress.
+Response (Output): OrderID, TotalPrice, EstimatedDeliveryDate, Status.
+4. Choose your Architectural Pattern
+Since you are a master, you don't just put everything in one folder.
+Clean Architecture (Recommended):
+Domain Layer: Pure C# classes (Entities) with no logic.
+Application Layer: Your "Verbs" (Logic). Interfaces for services.
+Infrastructure: Database context, Redis, and External APIs.
+API Layer: Controllers or Minimal APIs that handle the HTTP traffic.
+5. The "Logic Flow" (The Secret of Seniors)
+Before you write the C# code, write Pseudo-code (English code) for your most complex process.
+Process: Placing an Order
+Check if the user exists in DB.
+Check if all items are in stock.
+Calculate total price + tax.
+Call Payment Gateway.
+If payment fails, return error.
+If payment succeeds, create Order record and reduce Stock.
+Send confirmation email.
+Why this works for 2026 E-commerce:
+E-commerce is complex because it involves State Changes. A product isn't just "there"; it moves from InStock to Reserved to Sold. By planning these states before you code, you avoid "Spaghetti Code" where your logic gets tangled.
+Action Task:
+For your E-commerce project, take three entities: Product, User, and Order.
+List 5 properties for each (e.g., Product.Price, User.Email).
+Write down the "Verb" that connects them (e.g., "User places Order containing Products").
+Once you have this plan, you are ready to write your first Migration in EF Core. Microsoft's System Design Guide is your best resource for visual examples of this planning.
+
+
+

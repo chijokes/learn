@@ -1,0 +1,10 @@
+
+system requirement for tech
+
+Summary Table
+Component	Minimum	Professional Recommended
+CPU Speed	1.8 GHz	3.0+ GHz
+CPU Cores	Quad-core	16 Cores
+RAM	4 GB	16 GB - 64 GB
+Storage	2.5 GB HDD	50 GB+ NVMe SSD
+#####################################################################
