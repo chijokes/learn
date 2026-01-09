@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using ecommerce.Infrastructure.Data;
 using Scalar.AspNetCore;
+using Mapster;
+using ecommerce.Application.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,11 +10,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
+// Register Mapster with custom config
+var config = TypeAdapterConfig.GlobalSettings;
+config.Scan(typeof(MapsterProfile).Assembly);
+builder.Services.AddSingleton(config);
+
 // Register the DbContext (using SQLite for this example)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
+// Apply migrations automatically
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -26,15 +40,7 @@ if (app.Environment.IsDevelopment())
         options.WithTitle("E-Commerce API - Scalar View")
                .WithTheme(ScalarTheme.Moon);
     });
-
-    // SET UP 2: Swagger UI (Classic)
-    // Access at: http://localhost:PORT/swagger
-    app.UseSwaggerUI(options => {
-        // We must point Swagger to the .NET 10 OpenAPI JSON path
-        options.SwaggerEndpoint("/openapi/v1.json", "E-Commerce API v1");
-        options.RoutePrefix = "swagger"; 
-    });
 }
 
+app.MapControllers();
 app.Run();
-// ... rest of your middleware

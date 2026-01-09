@@ -1,6 +1,5 @@
-
-
 using ecommerce.Application.DTOs;
+using ecommerce.Application.DTOs.Product;
 using ecommerce.Domain.Entities;
 using ecommerce.Infrastructure.Data;
 using Mapster;
@@ -23,9 +22,20 @@ public class ProductsController(AppDbContext context) : ControllerBase
         return Ok(products.Adapt<IEnumerable<ProductResponse>>());
     }
 
+    // GET: api/products/{id}
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ProductResponse>> GetProductById(int id)
+    {
+        var product = await context.Products.FindAsync(id);
+        if (product == null)
+            return NotFound();
+
+        return Ok(product.Adapt<ProductResponse>());
+    }
+
     // POST: api/products
     [HttpPost]
-    public async Task<ActionResult<ProductResponse>> CreateProduct(CreateProductRequest request)
+    public async Task<ActionResult<ProductResponse>> CreateProduct([FromBody] CreateProductRequest request)
     {
         // 1. Map DTO to Entity
         var product = request.Adapt<Product>();
@@ -37,6 +47,6 @@ public class ProductsController(AppDbContext context) : ControllerBase
         // 3. Map Entity back to Response DTO
         var response = product.Adapt<ProductResponse>();
 
-        return CreatedAtAction(nameof(GetProducts), new { id = response.Id }, response);
+        return CreatedAtAction(nameof(GetProductById), new { id = response.Id }, response);
     }
 }
