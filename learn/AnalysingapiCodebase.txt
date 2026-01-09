@@ -1,0 +1,29 @@
+
+
+This process is officially known as Codebase Exploration or Source Code Analysis. Some senior developers also refer to it as Reverse Engineering an API because you are deconstructing the final product to understand how it was built. 
+In 2026, as you work toward your master level, you should use the following professional steps to fully understand a .NET Web API without a ReadMe:
+1. Identify the Entry Points
+Every .NET API has clear doors where requests enter. Start here to see what the API actually does:
+Minimal APIs: Look in Program.cs for app.MapGet or app.MapPost lines. This is the simplest way to see all endpoints in one file.
+Controllers: Look for a folder named Controllers. Each file (e.g., ProductsController.cs) represents a group of related features.
+Endpoints: Open these files to see the HTTP Methods (GET, POST, etc.) and the Route (the URL path). 
+2. Follow the "Logic Trunk" (The Flow)
+Once you find an interesting endpoint, use the "Trace and Debug" method to see the logic: 
+Set Breakpoints: Place a red dot (F9) on the first line of an endpoint method.
+Run the App: Press F5.
+Trigger the Request: Use the browser or a tool like Postman to call that URL.
+Step Through (F10/F11): Watch how the code jumps from the Controller to the Application Layer (Services) and then to the Infrastructure Layer (Repositories/Database). 
+3. Study the Data Models
+To understand the "Why" of the API, you must understand the data it handles: 
+Entities: Look in the Domain project for classes like User, Order, or Product.
+DbContext: Find where the database is configured. This tells you which tables exist and how they are linked (e.g., "One User has Many Orders").
+DTOs: Look at the "Data Transfer Objects" to see what specific information is being sent back to the user. 
+4. Look for "Contract" Tests
+If the project has a tests folder, read the Integration Tests. These are essentially a "secret manual" that shows you exactly how the developers intended the API to be used. 
+Summary of Topics
+This specific skill falls under these learning groups:
+Codebase Discovery & Comprehension: The academic names for learning a new project.
+Reverse Engineering / Back Engineering: Figuring out how an existing system works by disassembling its parts.
+Static vs. Dynamic Analysis: Static is reading the code while it's sitting still; Dynamic is watching it run in the debugger. 
+Pro-Tip for 2026 Mastery:
+As a master, your first contribution to a project with no documentation should be writing the documentation. Once you understand an endpoint, create a small README.md or add Swagger/Scalar support. This makes you a hero to the team and proves you fully mastered that section of the code.
